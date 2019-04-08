@@ -102,6 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
+# 한글 / 서울 추가
 
 LANGUAGE_CODE = 'ko-kr'
 
