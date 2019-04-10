@@ -29,3 +29,10 @@ def list(request):
         'posts': posts,
     }
     return render(request, 'posts/list.html', context)
+    
+    
+def delete(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+    return redirect('posts:list')
+    
