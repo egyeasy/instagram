@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>새로운 Post 작성하기</h1>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <!--부트스트랩 form을 쓰겠다는 의미. 함수 실행할 때처럼 %괄호 필요-->
   {% bootstrap_form form %}

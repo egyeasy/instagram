@@ -7,7 +7,7 @@ def create(request):
     # 만약, POST 요청이 오면
     if request.method == 'POST':
         # 글을 작성하기
-        form = PostModelForm(request.POST)
+        form = PostModelForm(request.POST, request.FILES) # 이미지 파일도 함께 받아온다.
         # 여기서 form.save()로 끝내줘도 되나, validation을 넣도록 하자.
         if form.is_valid():
             form.save()

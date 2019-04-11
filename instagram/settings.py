@@ -121,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 파일 주소에 접미사를 만들어줌
+MEDIA_URL = '/media/'
+
+# 절대경로로 나타내기 때문에 os.path.join 사용
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

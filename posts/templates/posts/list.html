@@ -6,7 +6,9 @@
     {% for post in posts %}
       <!--width 조정하면 가로폭 달라짐-->
       <div class="card" style="width: 40rem;">
-        <img src="https://picsum.photos/300/300/?random" class="card-img-top" alt="...">
+        {% if post.image.url %}
+          <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+        {% endif %}
         <div class="card-body">
           <p class="card-text">{{ post.content }}</p>
           <a href="{% url 'posts:update' post.id %}" class="btn btn-success">수정</a>
