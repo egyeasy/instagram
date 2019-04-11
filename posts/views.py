@@ -10,7 +10,9 @@ def create(request):
         form = PostModelForm(request.POST, request.FILES) # 이미지 파일도 함께 받아온다.
         # 여기서 form.save()로 끝내줘도 되나, validation을 넣도록 하자.
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False) # form을 객체로 만들긴 하지만 DB에 넣지는 마라
+            post.user = request.user
+            post.save()
             return redirect('posts:list')
     # 아니면 (GET 요청이 오면)
     else:
