@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostModelForm
-from .models import Post
+from .forms import PostModelForm, CommentForm
+from .models import Post, Comment
 
 # Create your views here.
 def create(request):
@@ -27,8 +27,12 @@ def create(request):
 def list(request):
     # 모든 Post를 보여줌
     posts = Post.objects.all()
+    
+    comment_form = CommentForm()
+    
     context = {
         'posts': posts,
+        'comment_form': comment_form,
     }
     return render(request, 'posts/list.html', context)
     
@@ -58,3 +62,13 @@ def update(request, post_id):
             'form': form
         }
         return render(request, 'posts/update.html', context)
+
+
+def create_comments(request, post_id):
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.user = request.user
+        comment.post_id = post_id # 객체를 갖다 쓸 수 없어서 id를 넣어준다
+        comment.save()
+    return redirect('posts:list')

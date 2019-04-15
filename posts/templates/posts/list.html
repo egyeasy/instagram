@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% load bootstrap4 %}
+{% load staticfiles %}
+
 {% block body %}
   <!--모든 post를 보여줌-->
   <div class="row justify-content-center"> <!-- row는 포함된 것을 flex로 만든다 -->
@@ -17,8 +20,19 @@
             <a href="{% url 'posts:update' post.id %}" class="btn btn-success">수정</a>
             <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
           {% endif %}
+          
+          <!--Comment form-->
+          <form method="POST" action="{% url 'posts:create_comments' post.id %}">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <button type="submit" class="btn btn-warning">댓글</button>
+          </form>
+          {% for comment in post.comment_set.all %}
+            <p>{{ comment.content }}</p>
+          {% endfor %}
         </div>
       </div>
     {% endfor %}
   </div>
+  <img src="{% static 'hawaii.jpg' %}" alt="hawaii">
 {% endblock %}
