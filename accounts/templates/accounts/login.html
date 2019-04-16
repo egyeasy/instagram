@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block body %}
+<h1>로그인</h1>
+<form method="POST">
+  {% csrf_token %}
+  <!--부트스트랩 form을 쓰겠다는 의미. 함수 실행할 때처럼 %괄호 필요-->
+  {% bootstrap_form form %}
+  <!--django에서 지원하는 button-->
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">로그인</button>
+  {% endbuttons %}
+</form>
+{% endblock %}
