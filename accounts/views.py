@@ -42,3 +42,13 @@ def profile(request, username):
     # profile = User.objects.get(username=username) # 이걸 쓰지 않고
     profile = get_object_or_404(get_user_model(), username=username)
     return render(request, 'accounts/profile.html', {'profile': profile})
+
+
+def delete(request):
+    # POST 계정을 삭제한다 == DB에서 user를 삭제한다
+    if request.method == "POST":
+        request.user.delete()
+        return redirect('accounts:signup')
+    
+    # GET -> 진짜 삭제하시겠습니까?
+    return render(request, 'accounts/delete.html')
