@@ -9,10 +9,11 @@ class Post(models.Model):
     # User와의 연결고리 필요
     # user = models.ForeignKey(User, ) 이렇게 하지 않고
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # user와의 연결고리 2 (M:N) Like
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_posts", blank=True)
     
     def __str__(self):
         return self.content
-
 
 class Comment(models.Model):
     content = models.CharField(max_length=100)

@@ -72,3 +72,20 @@ def create_comments(request, post_id):
         comment.post_id = post_id # 객체를 갖다 쓸 수 없어서 id를 넣어준다
         comment.save()
     return redirect('posts:list')
+    
+    
+def like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    # 특정 유저가 특정 포스트를 좋아요 할 때
+    # 만약 좋아요가 되어있다면
+    if request.user in post.like_users.all():
+        #  -> 좋아요를 해제하고,
+        post.like_users.remove(request.user)
+    # 아니면
+    else:
+        #  -> 좋아요를 한다.
+        post.like_users.add(request.user)
+        
+    return redirect('posts:list')
+    
+        
