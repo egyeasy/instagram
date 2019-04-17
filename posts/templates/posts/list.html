@@ -10,7 +10,7 @@
       <!--width 조정하면 가로폭 달라짐-->
       <div class="card" style="width: 40rem;">
         <div class="card-header">
-          <span>{{ post.user.username }}</span>
+          <span><a href="{% url 'profile' post.user.username %}">{{ post.user.username }}</a></span>
         </div>
         <img src="{{ post.image.url }}" class="card-img-top" alt="...">
         

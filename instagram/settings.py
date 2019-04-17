@@ -130,3 +130,6 @@ MEDIA_URL = '/media/'
 
 # 절대경로로 나타내기 때문에 os.path.join 사용
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 커스텀 User 사용(덮어쓰기)
+AUTH_USER_MODEL = 'accounts.User'

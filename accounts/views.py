@@ -3,12 +3,14 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login # 함수명과 겹치지 않도록 설정
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import get_user_model
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def signup(request):
     # 회원가입 시키기
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() # save의 return을 user로 받아서 로그인에 쓰겠다.
             auth_login(request, user)
@@ -16,7 +18,7 @@ def signup(request):
             return redirect('posts:list')
     # 회원가입 폼 보여주기
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})
 
 
@@ -52,3 +54,18 @@ def delete(request):
     
     # GET -> 진짜 삭제하시겠습니까?
     return render(request, 'accounts/delete.html')
+
+
+@login_required
+def follow(request, user_id):
+    # User라고 쓸 수 없다.
+    person = get_object_or_404(get_user_model(), pk=user_id)
+    # 만약 이미 팔로우한 사람이라면
+    if request.user in  person.followers.all():
+        # 언팔
+        person.followers.remove(request.user)
+    # 아니면
+    else:
+        # 팔로우
+        person.followers.add(request.user)
+    return redirect('profile', person.username)
